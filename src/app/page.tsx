@@ -1,11 +1,13 @@
 'use client'
-import { AppBar, Box, Button, ButtonGroup, Container, List, ListItem, ListItemIcon, ListItemText, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, ButtonGroup, Container, List, ListItem, ListItemIcon, ListItemText, Stack, Toolbar, Typography, alpha } from "@mui/material";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import WorkIcon from '@mui/icons-material/Work';
 export default function Home() {
   return (
-    <main>
+    <Box component={'main'} sx={{
+      backgroundImage: theme => `linear-gradient(180deg, ${alpha(theme.palette.primary.main, .1)}, transparent)`
+    }}>
       <Container sx={{paddingTop: 8}}>
         <Stack alignItems={'center'}>
           <Typography textAlign='center' variant="h1">Let your achievements speak for you</Typography>
@@ -46,9 +48,8 @@ export default function Home() {
             </ListItem>
           </List>
           <Button size='large' variant="contained" sx={{marginTop: 4, marginBottom: 4, marginInline: 'auto'}}>Get Started Free</Button>
-
         </Stack>
       </Container>
-    </main>
+    </Box>
   )
 }
