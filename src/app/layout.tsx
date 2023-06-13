@@ -1,4 +1,5 @@
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry"
+import NavBar from "./components/NavBar/NavBar";
 
 export const metadata = {
   title: 'Brag Vault',
@@ -13,7 +14,10 @@ export default function RootLayout({
   return (
     <ThemeRegistry>
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          <NavBar/>
+          {children}
+        </body>
       </html>
     </ThemeRegistry>
   )

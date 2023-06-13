@@ -1,7 +1,7 @@
 'use client'
 
 import { theme } from "@/components/theme"
-import { ThemeProvider } from "@mui/material"
+import { CssBaseline, ThemeProvider } from "@mui/material"
 
 export default function ({
   children,
@@ -9,6 +9,9 @@ export default function ({
   children: React.ReactNode
 }) {
   return (
-    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    <>
+        <CssBaseline/>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </>
   )
 }
