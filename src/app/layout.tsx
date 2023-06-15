@@ -1,3 +1,6 @@
+import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry"
+import NavBar from "./components/NavBar/NavBar";
+
 export const metadata = {
   title: 'Brag Vault',
   description: 'Home Page',
@@ -9,8 +12,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <ThemeRegistry>
+      <html lang="en">
+        <body>
+          <NavBar/>
+          {children}
+        </body>
+      </html>
+    </ThemeRegistry>
   )
 }
