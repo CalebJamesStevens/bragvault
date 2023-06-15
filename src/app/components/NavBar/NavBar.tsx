@@ -22,7 +22,7 @@ export default () => {
                         <Box component={'nav'} sx={{height:'auto', width: '100%'}}>
                             <List sx={{width: 250}}>
                                 <ListItem disablePadding >
-                                    <ListItemButton >
+                                    <ListItemButton href={'/brag-document'}>
                                         <ListItemIcon aria-hidden><DescriptionIcon/></ListItemIcon>
                                         <ListItemText>Brag Document</ListItemText>
                                     </ListItemButton>
