@@ -31,7 +31,7 @@ export default function AddBragForm() {
     situation: "",
     start_date: "",
     task: "",
-    team: [""],
+    team: [],
     user: "255ad9a5-6b27-4d94-91ff-e04bedf74765",
   });
 
