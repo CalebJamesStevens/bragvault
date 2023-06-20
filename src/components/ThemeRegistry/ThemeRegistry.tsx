@@ -12,11 +12,11 @@ import { CssBaseline, ThemeProvider } from "@mui/material"
 
 const queryClient = new QueryClient()
 
-export default function ({
+export const ThemeRegistry = ({
   children,
 }: {
   children: React.ReactNode
-}) {
+}) => {
   return (
     <QueryClientProvider client={queryClient}>
     <>
@@ -26,3 +26,5 @@ export default function ({
     </QueryClientProvider>
   )
 }
+
+export default ThemeRegistry;

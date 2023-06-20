@@ -6,7 +6,7 @@ import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListIt
 import MenuIcon from "@mui/icons-material/Menu";
 import DescriptionIcon from '@mui/icons-material/Description';
 
-export default () => {
+export const NavBar = () => {
     const [navigationMenuOpen, setNavigationMenuOpen] = React.useState(false);
     const navigationMenuId = React.useId();
 
@@ -35,3 +35,5 @@ export default () => {
         </AppBar>
     )
 }
+
+export default NavBar;
