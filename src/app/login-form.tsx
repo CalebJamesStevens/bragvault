@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogTitle } from '@mui/material'
 
 import {
   // Import predefined theme
-  ThemeSupa, supabase
+  ThemeSupa
 } from '@supabase/auth-ui-shared'
 import { usePathname } from 'next/navigation'
 

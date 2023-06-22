@@ -6,9 +6,10 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
-import { Divider } from '@mui/material';
+import Divider from '@mui/material/Divider';
+import Skeleton from '@mui/material/Skeleton';
 
-export const BragList = ({brags}: {brags: any[] | null}) => {
+export const BragList = ({brags, loading}: {brags: any[] | null, loading: boolean}) => {
   const styles = {
     headingThree: {
       marginTop: 0,
@@ -25,6 +26,60 @@ export const BragList = ({brags}: {brags: any[] | null}) => {
   }
 
   return <List disablePadding>
+    {(loading) && (<>
+      <ListItem aria-label='loading' disablePadding sx={{marginBottom: 1.5}}>
+        <Paper sx={{width: '100%', padding: 2}}>
+          <Stack>
+            <ListItemText primaryTypographyProps={{variant: 'h2', fontSize: '1.5rem'}}>
+              <Skeleton width={'45%'} variant='text'/>
+            </ListItemText>
+            <Stack gap={1} alignItems={'flex-end'} direction={'row'}>
+              <Skeleton width={'30%'} variant='text'/>
+              <Skeleton width={'40%'} variant='text'/>
+            </Stack>
+            <Stack gap={1} alignItems={'flex-end'} direction={'row'}>
+              <Skeleton width={'30%'} variant='text'/>
+              <Skeleton width={'40%'} variant='text'/>
+            </Stack>
+            <Divider aria-hidden sx={{ marginTop: 2 }} />
+            <Skeleton height={'36px'} width={'30%'} variant='text'/>
+            <Skeleton variant='text'/>
+            <Skeleton height={'36px'} width={'30%'} variant='text'/>
+            <Skeleton variant='text'/>
+            <Skeleton height={'36px'} width={'30%'} variant='text'/>
+            <Skeleton variant='text'/>
+            <Skeleton height={'36px'} width={'30%'} variant='text'/>
+            <Skeleton variant='text'/>
+          </Stack>
+        </Paper>
+      </ListItem>
+      <ListItem aria-label='loading' disablePadding sx={{marginBottom: 1.5}}>
+        <Paper sx={{width: '100%', padding: 2}}>
+          <Stack>
+            <ListItemText primaryTypographyProps={{variant: 'h2', fontSize: '1.5rem'}}>
+              <Skeleton width={'45%'} variant='text'/>
+            </ListItemText>
+            <Stack gap={1} alignItems={'flex-end'} direction={'row'}>
+              <Skeleton width={'30%'} variant='text'/>
+              <Skeleton width={'40%'} variant='text'/>
+            </Stack>
+            <Stack gap={1} alignItems={'flex-end'} direction={'row'}>
+              <Skeleton width={'30%'} variant='text'/>
+              <Skeleton width={'40%'} variant='text'/>
+            </Stack>
+            <Divider aria-hidden sx={{ marginTop: 2 }} />
+            <Skeleton height={'36px'} width={'30%'} variant='text'/>
+            <Skeleton variant='text'/>
+            <Skeleton height={'36px'} width={'30%'} variant='text'/>
+            <Skeleton variant='text'/>
+            <Skeleton height={'36px'} width={'30%'} variant='text'/>
+            <Skeleton variant='text'/>
+            <Skeleton height={'36px'} width={'30%'} variant='text'/>
+            <Skeleton variant='text'/>
+          </Stack>
+        </Paper>
+      </ListItem>
+    </>)}
     {brags?.map((brag: any) => (
       <ListItem disablePadding sx={{marginBottom: 1.5}} key={brag.id}>
         <Paper sx={{width: '100%', padding: 2}}>

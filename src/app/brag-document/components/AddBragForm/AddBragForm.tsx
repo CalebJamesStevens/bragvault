@@ -14,11 +14,13 @@ import TextField from "@mui/material/TextField";
 
 import Add from "@mui/icons-material/Add";
 import { Database } from "../../types/supabase";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-export default function AddBragForm() {
+export default function AddBragForm({setData}: {setData: any}) {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const dialogId = React.useId();
+  const supabase = createClientComponentClient<Database>();
   const [formValues, setFormValues] = React.useState<
     Database["public"]["Tables"]["brag"]["Insert"]
   >({
@@ -32,7 +34,7 @@ export default function AddBragForm() {
     start_date: "",
     task: "",
     team: [],
-    user: "255ad9a5-6b27-4d94-91ff-e04bedf74765",
+    user: '',
   });
 
   //   Google describes this as: "Accomplished [X] as measured by [Y], by doing [Z]."
@@ -43,6 +45,11 @@ export default function AddBragForm() {
   // A - the action you took to complete that task. Example: "I built a React app."
   // R - the result of your actions. Example: "We shipped the project on time and under budget."
   //
+  React.useEffect(() => {
+    supabase.auth.getUser().then(user => {
+      setFormValues((previousValues) => ({...previousValues, user: user.data.user?.id ?? ''}))
+    })
+  }, [])
 
   return (
     <>
@@ -63,7 +70,10 @@ export default function AddBragForm() {
             body: JSON.stringify(formValues),
           })
             .then((response) => response.json())
-            .then(() => {
+            .then(({data, error}) => {
+              if(!error) {
+                setData((previousValues: Database["public"]["Tables"]["brag"]["Row"][]) => [data[0], ...previousValues ])
+              }
               setOpen(false)
               setLoading(false)
             })
@@ -221,7 +231,7 @@ export default function AddBragForm() {
             <Button disabled={loading} color="error" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button disabled={loading} type="submit">Add</Button>
+            <Button disabled={loading || !formValues.user} type="submit">Add</Button>
           </DialogActions>
         </Box>
       </Dialog>

@@ -15,11 +15,15 @@ import BragList from '../BragList/BragList';
 
 export const BragDocument = () => {
   const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
   React.useEffect(() => {
     const getData = () => {
       fetch('/brag-document/api')
         .then((response) => response.json())
-        .then((data) => setData(data));
+        .then((data) => setData(data))
+        .then(() => setLoading(false))
+        .catch((error) => setLoading(false));
     };
 
     getData();
@@ -32,11 +36,9 @@ export const BragDocument = () => {
       <Container sx={{paddingTop: 2}}>
         <Typography variant="h1">Your Brag Document</Typography>
           <Stack paddingY={2} direction={'row'} justifyContent={'center'} alignItems={'center'}>
-            <AddBragForm/>
+            <AddBragForm setData={setData} />
           </Stack>
-          <Suspense fallback={<div>Loading...</div>}>
-            <BragList brags={data}/>
-          </Suspense>
+          <BragList loading={loading} brags={data}/>
       </Container>
     </Box>
   )

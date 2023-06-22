@@ -25,12 +25,11 @@ export const NavBar = () => {
     const router = useRouter()
     const [navigationMenuOpen, setNavigationMenuOpen] = React.useState(false);
     const navigationMenuId = React.useId();
-    // const [session, setSession] = React.useState<Session | null>(null)
     const [unAuthed, setUnAuthed] = React.useState(true)
     const supabase = createClientComponentClient<Database>()
 
     React.useEffect(() => {
-        supabase.auth.onAuthStateChange((event, session) => {
+        supabase.auth.onAuthStateChange((_, session) => {
             setUnAuthed(!session)
         })
     }, [])
