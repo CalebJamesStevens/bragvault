@@ -20,6 +20,8 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { Database } from '@/lib/database.types';
 import { useRouter } from 'next/navigation';
 import { Logout } from '@mui/icons-material';
+import Link from 'next/link';
+import { Button } from '@mui/material';
 
 export const NavBar = () => {
     const router = useRouter()
@@ -29,8 +31,13 @@ export const NavBar = () => {
     const supabase = createClientComponentClient<Database>()
 
     React.useEffect(() => {
-        supabase.auth.onAuthStateChange((_, session) => {
+        supabase.auth.onAuthStateChange((event, session) => {
             setUnAuthed(!session)
+            if (event === 'SIGNED_OUT') {
+                router.push('/')
+            } if (event === 'SIGNED_IN') {
+                window.location.reload()
+            }
         })
     }, [])
 
@@ -38,7 +45,9 @@ export const NavBar = () => {
         <AppBar sx={{background: 'white'}} position="sticky">
             <Toolbar sx={{background: 'none'}}>
                 <Stack alignItems={'center'} width={'100%'} direction={'row'} justifyContent={'space-between'}>
-                    <img src='logo.svg' alt="Brag Vault Logo" height={24}/>
+                    <Button href='/' aria-label='Image Of Brag Vault Logo: Click To Navigate Home'>
+                        <img src='logo.svg' alt="Brag Vault Logo" height={24}/>
+                    </Button>
                     <IconButton onClick={() => setNavigationMenuOpen(true)} aria-controls={navigationMenuId} aria-haspopup={'dialog'} aria-label="Open Navigation Menu" size="medium">
                         <MenuIcon fontSize="medium" />
                     </IconButton>
@@ -46,7 +55,7 @@ export const NavBar = () => {
                         <Box component={'nav'} sx={{height:'auto', width: '100%'}}>
                             <List sx={{width: 250}}>
                                 <ListItem disablePadding >
-                                    <ListItemButton href={'/brag-document'}>
+                                    <ListItemButton LinkComponent={Link} href={'/brag-document'}>
                                         <ListItemIcon aria-hidden><DescriptionIcon/></ListItemIcon>
                                         <ListItemText>Brag Document</ListItemText>
                                     </ListItemButton>
@@ -55,7 +64,7 @@ export const NavBar = () => {
                                     <ListItem disablePadding >
                                         <ListItemButton onClick={async () => {
                                             await supabase.auth.signOut()
-                                            router.refresh()
+                                            setNavigationMenuOpen(false)
                                         }}>
                                             <ListItemIcon aria-hidden><Logout/></ListItemIcon>
                                             <ListItemText>Logout</ListItemText>
