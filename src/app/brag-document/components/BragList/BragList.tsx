@@ -8,8 +8,10 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import Skeleton from '@mui/material/Skeleton';
+import { IconButton } from '@mui/material';
+import { Delete } from '@mui/icons-material';
 
-export const BragList = ({brags, loading}: {brags: any[] | null, loading: boolean}) => {
+export const BragList = ({setBrags, brags, loading}: {setBrags: any, brags: any[] | null, loading: boolean}) => {
   const styles = {
     headingThree: {
       marginTop: 0,
@@ -84,7 +86,22 @@ export const BragList = ({brags, loading}: {brags: any[] | null, loading: boolea
       <ListItem disablePadding sx={{marginBottom: 1.5}} key={brag.id}>
         <Paper sx={{width: '100%', padding: 2}}>
           <Stack>
-            <ListItemText primaryTypographyProps={{variant: 'h2', fontSize: '1.5rem'}} primary={brag.title} secondary={brag.start_date + ' to ' + brag.end_date}/>
+            <Stack direction={'row'}>
+              <ListItemText primaryTypographyProps={{variant: 'h2', fontSize: '1.5rem'}} primary={brag.title} secondary={brag.start_date + ' to ' + brag.end_date} />
+              <IconButton aria-label='delete brag' onClick={(event) => {
+                event.preventDefault();
+                fetch(`/brag-document/api?id=${brag.id}`, {method: 'DELETE' })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    if (data.error === null) {
+                      setBrags((previousData: typeof brags) => previousData.filter((prevBrag: any) => prevBrag.id !== brag.id))
+                    }
+                  })
+                  .catch((error) => console.error(error))
+              }}>
+                <Delete/>
+              </IconButton>
+            </Stack>
             <Stack gap={1} alignItems={'flex-end'} direction={'row'}>
               <Typography sx={styles.headingThree} variant='h3'>
                 Position:

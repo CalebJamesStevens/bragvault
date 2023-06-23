@@ -38,7 +38,7 @@ export const BragDocument = () => {
           <Stack paddingY={2} direction={'row'} justifyContent={'center'} alignItems={'center'}>
             <AddBragForm setData={setData} />
           </Stack>
-          <BragList loading={loading} brags={data}/>
+          <BragList setBrags={setData} loading={loading} brags={data}/>
       </Container>
     </Box>
   )

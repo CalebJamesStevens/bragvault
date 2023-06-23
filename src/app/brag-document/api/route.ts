@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Database } from '../types/supabase';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
@@ -16,7 +16,6 @@ export async function POST(request: Request & { json: () => Promise<Database['pu
   const body = await request.json();
   const supabase = createRouteHandlerClient<Database>({ cookies })
 
-  
   const { data, error } = await supabase
   .from('brag')
   .insert([
@@ -24,6 +23,18 @@ export async function POST(request: Request & { json: () => Promise<Database['pu
   ])
   .select()
 
+  return NextResponse.json({data, error});
+}
+
+export async function DELETE(request: NextRequest) {
+  const id = request.nextUrl.searchParams.get('id')
+
+  const supabase = createRouteHandlerClient<Database>({ cookies })
+
+  const { data, error } = await supabase
+  .from('brag')
+  .delete()
+  .eq('id', id)
 
   return NextResponse.json({data, error});
 }
