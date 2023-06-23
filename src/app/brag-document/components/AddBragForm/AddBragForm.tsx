@@ -15,6 +15,9 @@ import TextField from "@mui/material/TextField";
 import Add from "@mui/icons-material/Add";
 import { Database } from "../../types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { IconButton } from "@mui/material";
+import Link from "next/link";
+import { Help } from "@mui/icons-material";
 
 export default function AddBragForm({setData}: {setData: any}) {
   const [open, setOpen] = React.useState(false);
@@ -46,9 +49,12 @@ export default function AddBragForm({setData}: {setData: any}) {
   // R - the result of your actions. Example: "We shipped the project on time and under budget."
   //
   React.useEffect(() => {
-    supabase.auth.getUser().then(user => {
-      setFormValues((previousValues) => ({...previousValues, user: user.data.user?.id ?? ''}))
-    })
+    const getUser = () => {
+      supabase.auth.getUser().then(user => {
+        setFormValues((previousValues) => ({...previousValues, user: user.data.user?.id ?? ''}))
+      })
+    }
+    getUser()
   }, [])
 
   return (
@@ -83,7 +89,11 @@ export default function AddBragForm({setData}: {setData: any}) {
         open={open}
         onClose={() => setOpen(false)}
       >
-        <DialogTitle>Add A Brag</DialogTitle>
+
+        <DialogTitle>Add A Brag
+
+        <IconButton target="_blank" aria-label="Link to help page where brag documents and the STAR system are explained" size="small" LinkComponent={Link} href="/help"><Help/></IconButton>
+        </DialogTitle>
         <Box component={"form"}>
           <DialogContent>
             <Stack gap={2}>

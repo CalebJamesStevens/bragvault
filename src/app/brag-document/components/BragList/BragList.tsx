@@ -1,5 +1,7 @@
 'use client'
 
+import React from 'react';
+
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -8,10 +10,15 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import Skeleton from '@mui/material/Skeleton';
-import { IconButton } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import Delete from '@mui/icons-material/Delete';
 
 export const BragList = ({setBrags, brags, loading}: {setBrags: any, brags: any[] | null, loading: boolean}) => {
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const styles = {
     headingThree: {
       marginTop: 0,
@@ -88,7 +95,14 @@ export const BragList = ({setBrags, brags, loading}: {setBrags: any, brags: any[
           <Stack>
             <Stack direction={'row'}>
               <ListItemText primaryTypographyProps={{variant: 'h2', fontSize: '1.5rem'}} primary={brag.title} secondary={brag.start_date + ' to ' + brag.end_date} />
-              <IconButton aria-label='delete brag' onClick={(event) => {
+              <IconButton aria-haspopup='dialog' aria-controls='delete-brag-dialog' color='error' sx={{marginY: 'auto'}} aria-label='delete brag' onClick={() => setDeleteModalOpen(true)}>
+                <Delete/>
+              </IconButton>
+              <Dialog id='delete-brag-dialog' open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
+                <DialogTitle>Do you want to delete this brag?</DialogTitle>
+                <DialogActions>
+                  <Button onClick={() => setDeleteModalOpen(false)}>Cancel</Button>
+                  <Button color='error' onClick={(event) => {
                 event.preventDefault();
                 fetch(`/brag-document/api?id=${brag.id}`, {method: 'DELETE' })
                   .then((response) => response.json())
@@ -98,9 +112,10 @@ export const BragList = ({setBrags, brags, loading}: {setBrags: any, brags: any[
                     }
                   })
                   .catch((error) => console.error(error))
-              }}>
-                <Delete/>
-              </IconButton>
+                  .finally(() => setDeleteModalOpen(false));
+              }}>Delete</Button>
+                </DialogActions>
+              </Dialog>
             </Stack>
             <Stack gap={1} alignItems={'flex-end'} direction={'row'}>
               <Typography sx={styles.headingThree} variant='h3'>
