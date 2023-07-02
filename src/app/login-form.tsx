@@ -15,17 +15,15 @@ import {
 import { usePathname } from 'next/navigation'
 
 export default function LoginForm({ session }: { session: Session | null }) {
-  const [unAuthed, setUnAuthed] = React.useState(!session)
+  const [user, setUser] = React.useState(session?.user)
   const pathname = usePathname()
   const supabase = createClientComponentClient()
-  React.useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-        setUnAuthed(!session)
-    })
-  }, [])
-
+  supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user)
+  })
+  
   return (
-    <Dialog open={unAuthed && pathname !== '/'}>
+    <Dialog open={!!!user && pathname !== '/'}>
       <DialogTitle sx={{
         fontSize: '1rem',
         fontWeight: 'bold',
@@ -34,7 +32,7 @@ export default function LoginForm({ session }: { session: Session | null }) {
         Sign In or Sign Up
       </DialogTitle>
       <DialogContent>
-        <Auth  supabaseClient={supabase} appearance={{ theme: ThemeSupa }} providers={[]} />
+        <Auth redirectTo='/brag-document' supabaseClient={supabase} appearance={{ theme: ThemeSupa }} providers={['google', 'linkedin', 'github']}  />
       </DialogContent>
     </Dialog>
   )

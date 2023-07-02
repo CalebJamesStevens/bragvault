@@ -13,7 +13,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { User, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import MenuIcon from "@mui/icons-material/Menu";
 import DescriptionIcon from '@mui/icons-material/Description';
 
@@ -27,19 +27,21 @@ export const NavBar = () => {
     const router = useRouter()
     const [navigationMenuOpen, setNavigationMenuOpen] = React.useState(false);
     const navigationMenuId = React.useId();
-    const [unAuthed, setUnAuthed] = React.useState(true)
+    const [user, setUser] = React.useState<User | null>(null)
     const supabase = createClientComponentClient<Database>()
+    supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_OUT') {
+            setUser(null)
+        }
+    })
 
     React.useEffect(() => {
-        supabase.auth.onAuthStateChange((event, session) => {
-            setUnAuthed(!session)
-            if (event === 'SIGNED_OUT') {
-                router.push('/')
-            } if (event === 'SIGNED_IN') {
-                window.location.reload()
-            }
-        })
-    }, [])
+        const getUser = () => {
+            supabase.auth.getUser().then(res => setUser(res.data.user), (() => setUser(null)));
+        }
+
+        getUser()
+    }, [supabase])
 
     return (
         <AppBar sx={{background: 'white'}} position="sticky">
@@ -60,7 +62,7 @@ export const NavBar = () => {
                                         <ListItemText>Brag Document</ListItemText>
                                     </ListItemButton>
                                 </ListItem>
-                                {!unAuthed && (
+                                {user && (
                                     <ListItem disablePadding >
                                         <ListItemButton onClick={async () => {
                                             await supabase.auth.signOut()
