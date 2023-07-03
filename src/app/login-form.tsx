@@ -6,34 +6,24 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 import { Auth } from '@supabase/auth-ui-react'
 import type { Session } from '@supabase/auth-helpers-nextjs'
-import { Dialog, DialogContent, DialogTitle } from '@mui/material'
 
 import {
   // Import predefined theme
   ThemeSupa
 } from '@supabase/auth-ui-shared'
-import { usePathname } from 'next/navigation'
+
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+
 
 export default function LoginForm({ session }: { session: Session | null }) {
-  const [user, setUser] = React.useState(session?.user)
-  const pathname = usePathname()
   const supabase = createClientComponentClient()
-  supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user)
-  })
   
   return (
-    <Dialog open={!!!user && pathname !== '/'}>
-      <DialogTitle sx={{
-        fontSize: '1rem',
-        fontWeight: 'bold',
-        paddingBottom: 0,
-      }}>
-        Sign In or Sign Up
-      </DialogTitle>
-      <DialogContent>
+    <Stack paddingTop={2} component='main' height={'100%'} justifyContent='center' alignItems='center'>
+      <Box minWidth='300px' maxWidth='500px'>
         <Auth redirectTo='/brag-document' supabaseClient={supabase} appearance={{ theme: ThemeSupa }} providers={['google', 'linkedin', 'github']}  />
-      </DialogContent>
-    </Dialog>
+      </Box>
+    </Stack>
   )
 }

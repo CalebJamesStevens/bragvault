@@ -18,13 +18,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import DescriptionIcon from '@mui/icons-material/Description';
 
 import { Database } from '@/lib/database.types';
-import { useRouter } from 'next/navigation';
+
 import { Help, Logout } from '@mui/icons-material';
 import Link from 'next/link';
 import { Button } from '@mui/material';
 
 export const NavBar = () => {
-    const router = useRouter()
     const [navigationMenuOpen, setNavigationMenuOpen] = React.useState(false);
     const navigationMenuId = React.useId();
     const [user, setUser] = React.useState<User | null>(null)
@@ -66,6 +65,8 @@ export const NavBar = () => {
                                     <ListItem disablePadding >
                                         <ListItemButton onClick={async () => {
                                             await supabase.auth.signOut()
+                                            // using window instead of useRouter because useRouter.push replaces
+                                            window.location.assign('/')
                                             setNavigationMenuOpen(false)
                                         }}>
                                             <ListItemIcon aria-hidden><Logout/></ListItemIcon>
