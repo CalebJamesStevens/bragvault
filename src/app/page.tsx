@@ -13,6 +13,7 @@ import { alpha } from "@mui/material/styles";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import WorkIcon from "@mui/icons-material/Work";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -75,6 +76,8 @@ export default function Home() {
               <Button
                 size="large"
                 variant="contained"
+                LinkComponent={Link}
+                href="/brag-document"
                 sx={(theme) => ({
                   marginTop: 4,
                   [theme.breakpoints.up("md")]: {
@@ -88,6 +91,8 @@ export default function Home() {
               <Button
                 size="large"
                 variant="outlined"
+                LinkComponent={Link}
+                href="/help"
                 sx={(theme) => ({
                   marginTop: 2,
                   [theme.breakpoints.up("md")]: {
@@ -114,7 +119,6 @@ export default function Home() {
           <Typography textAlign="center" variant="h2">
             Stand out from the competition and impress employers
           </Typography>
-          {/* <Typography marginTop={2} variant="body1">In today's competitive job market, standing out is essential</Typography> */}
           <List sx={{ marginTop: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', '& li': {width: 'fit-content'} }}>
             <ListItem>
               <ListItemIcon>
@@ -137,6 +141,8 @@ export default function Home() {
           </List>
           <Button
             size="large"
+            LinkComponent={Link}
+            href="/brag-document"
             variant="contained"
             sx={{ marginTop: 4, marginBottom: 4, marginInline: "auto" }}
           >
