@@ -15,7 +15,7 @@ export const HelpPage = () => {
       </Typography>
       <Typography sx={{marginTop: 4}} variant="body1">
         <strong>Introduction:</strong> In the realm of professional success,
-        effectively showcasing one's accomplishments is crucial. Brag documents,
+        effectively showcasing one&apos;s accomplishments is crucial. Brag documents,
         also known as achievement portfolios or accomplishment trackers, are
         powerful tools for highlighting your skills, experiences, and
         contributions. Within these documents, the STAR method emerges as a
@@ -39,7 +39,7 @@ export const HelpPage = () => {
         approach that allows you to succinctly and effectively communicate your
         accomplishments within a brag document. It stands for Situation, Task,
         Action, and Result, and it provides a structured framework for crafting
-        compelling stories about your achievements. Let's break down each
+        compelling stories about your achievements. Let&apos;s break down each
         component:
       </Typography>
       <List>
