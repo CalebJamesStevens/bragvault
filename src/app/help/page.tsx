@@ -7,7 +7,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Container from "@mui/material/Container";
 
-export const HelpPage = () => {
+export default function HelpPage() {
   return (
     <Container sx={{paddingY: 2}}>
       <Typography sx={{fontSize: '1.5rem'}} variant="h1">
@@ -122,5 +122,3 @@ export const HelpPage = () => {
     </Container>
   );
 };
-
-export default HelpPage;
