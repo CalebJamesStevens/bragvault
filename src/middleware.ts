@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(url)
     }
   } else {
-    if (['/'].includes(req.nextUrl.pathname)) {
+    if (['/', '/sign-in'].includes(req.nextUrl.pathname)) {
       const url = req.nextUrl.clone()
       url.pathname = '/brag-document'
       return NextResponse.redirect(url)
